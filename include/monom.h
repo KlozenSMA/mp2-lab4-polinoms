@@ -1,1 +1,25 @@
-// класс или структура Монома (double коэффициент, целая свернутая степень)
+// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (double пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+#include <string>
+#include <cassert>
+//#include "list.h"
+#include <iostream>
+class monom
+{
+    private:
+    double co;
+    int pow;
+    public:
+    //РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹ Рё co
+    monom(double co,int pow);
+    monom(std::string mourice);
+    ~monom();
+
+    //СЂР°Р±РѕС‚Р° СЃ Р°СЂРіСѓРјРµРЅС‚Р°РјРё
+    double GetCo(const monom& eh);
+    double GetPows(const monom& eh);
+
+    //СЂР°Р±РѕС‚Р° СЃ РјРѕРЅРѕРјРѕРј
+    bool operator<(const monom& eh);
+    bool operator==(const monom& eh);
+    bool operator!=(const monom& eh);
+};
