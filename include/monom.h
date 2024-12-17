@@ -1,5 +1,4 @@
 // ����� ��� ��������� ������ (double �����������, ����� ��������� �������)
-#include <string>
 #include <cassert>
 //#include "list.h"
 #include <iostream>
@@ -16,10 +15,13 @@ class monom
 
     //работа с аргументами
     double GetCo(const monom& eh);
-    double GetPows(const monom& eh);
+    int GetPowx(const monom& eh);
+    int GetPowy(const monom& eh);
+    int GetPowz(const monom& eh);
 
     //работа с мономом
     bool operator<(const monom& eh);
+    bool operator>(const monom& eh);
     bool operator==(const monom& eh);
     bool operator!=(const monom& eh);
 };
