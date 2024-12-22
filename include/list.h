@@ -7,14 +7,17 @@ struct NODE
     NODE* next;
     NODE(T val; NODE* next);
 };
+
 template<class T>
 class List
 {
+    protected:
     NODE<T>* first; NODE<T>* last;
     public:
     List()
     {
-        first.next = &first;
+        first = nullptr;
+        last = nullptr;
     }
     void Insert(T Val)
     {
@@ -24,10 +27,17 @@ class List
         else
         {first = p;last = p;}
     }
-    void Insert(Node* now, Node* insertion)
+    void Insert(NODE* now, NODE* insertion)
     {
-        insertion->next=now->next;
-        now->next=insertion;
+        if (now -> next != nullptr)
+        {
+            insertion-> next = now -> next;
+            insertion-> val = now -> val;
+        }
+        else
+        {
+            last->val = insertion -> val;
+        }
     }
     void InsertFirst(T Val)
     {
@@ -49,19 +59,6 @@ class List
             tmp->next = p;
         }
     }
-    List(const List& b)
-    {
-        first->val = &b.first->val;
-        first->next = &first;
-        NODE* q = &first;
-	    NODE* p = b.first->next;
-        while(p != &b.first)
-	    {
-            Insert(q, new NODE(p->m));
-            p = p->next;
-            q = q->next;
-	    }
-    }
     void DeleteAll()
     {
         if (first != nullptr)
@@ -75,6 +72,30 @@ class List
             }
             delete first;
         }
+    }
+    List(const List& b)
+    {
+        DeleteAll();
+        if (b.first->next != nullptr)
+        {
+            first = b.first;
+            first->next = b.first->next;
+            NODE* tmp = b.first->next;
+            NODE* tmp1 = first->next;
+            while (tmp -> next != nullptr)
+            {
+                tmp1 -> next = tmp -> next;
+                tmp = tmp -> next;
+                tmp1 = tmp1 -> next;
+            }
+            last->val = tmp->val;
+        }
+        else
+        {
+            first = b.first;
+            last = b.first;
+        }
+
     }
     ~List()
     {
@@ -107,15 +128,24 @@ class List
             return this;
         }
         this->DeleteAll();
-        first->val = l.first->val;
-        first->next = &first;
-        NODE* q = &first;
-	    NODE* p = b.first->next;
-        while(p != &b.first)
-	    {
-            Insert(q, new NODE(p->m));
-            p = p->next;
-            q = q->next;
-	    }
+        if (b.first->next != nullptr)
+        {
+            first = b.first;
+            first->next = b.first->next;
+            NODE* tmp = b.first->next;
+            NODE* tmp1 = first->next;
+            while (tmp -> next != nullptr)
+            {
+                tmp1 -> next = tmp -> next;
+                tmp = tmp -> next;
+                tmp1 = tmp1 -> next;
+            }
+            last->val = tmp->val;
+        }
+        else
+        {
+            first = b.first;
+            last = b.first;
+        }
     }
 };

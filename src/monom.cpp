@@ -30,19 +30,23 @@ monom::monom(std::string mourice)
 monom::~monom()
 {}
 
-double monom::GetCo(const monom& eh)
+double monom::GetCo()
 {
     return co;
 }
-int monom::GetPowx(const monom& eh)
+int monom::GetFullPow()
+{
+    return pow;
+}
+int monom::GetPowx()
 {
     return pow / 100;
 }
-int monom::GetPowy(const monom& eh)
+int monom::GetPowy()
 {
     return (pow / 10) % 10;
 }
-int monom::GetPowz(const monom& eh)
+int monom::GetPowz()
 {
     return pow % 10;
 }
