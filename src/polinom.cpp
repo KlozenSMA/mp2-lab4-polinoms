@@ -1,10 +1,10 @@
 #include "polinom.h"
-polynom<monom>::polynom()
+polynom::polynom()
 {
     first = nullptr;
     last = nullptr;
 }
-void polynom<monom>::Sortishe(const polynom<monom>& p)
+void polynom::Sortishe(const polynom& p)
 {
     NODE<monom>* tmp = p.first;
     NODE<monom>* runner = p.first;
@@ -24,9 +24,30 @@ void polynom<monom>::Sortishe(const polynom<monom>& p)
         runner = runner -> next;
     }
 }
-polynom<monom>::polynom(const polynom<monom>& h)
+polynom::polynom(const polynom& h)
 {
-
+    DeleteAll();
+        if (h.first->next != nullptr)
+        {
+            first = h.first;
+            first->next = h.first->next;
+            NODE<monom>* tmp = h.first->next;
+            NODE<monom>* tmp1 = first->next;
+            while (tmp -> next != nullptr)
+            {
+                tmp1 -> next = tmp -> next;
+                tmp = tmp -> next;
+                tmp1 = tmp1 -> next;
+            }
+            last->val = tmp->val;
+        }
+        else
+        {
+            first = h.first;
+            last = h.first;
+        }
 }
-polynom<monom>::~polynom()
-{}
+polynom::~polynom()
+{
+    DeleteAll();
+}

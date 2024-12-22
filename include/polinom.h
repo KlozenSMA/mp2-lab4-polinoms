@@ -6,27 +6,26 @@
 #include "monom.h"
 #include "list.h"
 
-template<class T>
-class polynom : private List<T>
+class polynom : private List<monom>
 {
-    using List<T>::first;
-    using List<T>::last;
+    using List<monom>::first;
+    using List<monom>::last;
 public:
 // конструктор
 polynom();
 // конструктор копирования
-polynom(const polynom<T>& p);
+polynom(const polynom& p);
 //деструктор
 ~polynom();
 //функция упорядочивания
-void Sortishe(const polynom<T>& p);
+void Sortishe(const polynom& p);
 //всякие операторы
-
-bool operator==(const polynom<T>& p);
-bool operator!=(const polynom<T>& p);
-polynom operator+(const polynom<T>& p);
+using List<monom>::operator=;
+polynom operator==(const polynom);
+polynom operator!=(const polynom);
+polynom operator+(const polynom& p);
 polynom operator+(const monom& m);
-polynom operator-(const polynom<T>& p);
+polynom operator-(const polynom& p);
 polynom operator-(const monom& m);
 polynom operator*(double val);
 //мы очень спешим
