@@ -2,7 +2,7 @@
 #include <iostream>
 class monom
 {
-    private:
+    protected:
     double co;
     int pow;
     public:

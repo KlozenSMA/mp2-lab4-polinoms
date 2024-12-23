@@ -21,13 +21,16 @@ polynom(const polynom& p);
 void Sortishe(const polynom& p);
 //всякие операторы
 using List<monom>::operator=;
-polynom operator==(const polynom);
-polynom operator!=(const polynom);
+bool operator==(const polynom& ah);
+bool operator!=(const polynom& ah);
 polynom operator+(const polynom& p);
 polynom operator+(const monom& m);
-polynom operator-(const polynom& p);
-polynom operator-(const monom& m);
+//не совсем уверен нужна ли эта штука
+// polynom operator-(const polynom& p);
+// polynom operator-(const monom& m);
 polynom operator*(double val);
+polynom operator*(const monom& p);
+polynom operator*(const polynom& p);
 //мы очень спешим
 // friend ostream& operator<<(ostream &ostrich, const polynom& m);
 // friend istream& operator<<(istream &istrich, const polynom& m);
