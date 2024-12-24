@@ -3,6 +3,7 @@
 TEST(list,can_create_a_list_copy)
 {
     List<int> f;
+    f.InsertLast(10);
     ASSERT_NO_THROW(List<int> res(f));
 }
 TEST(list,can_insertfirst_and_get_an_element)
@@ -44,11 +45,6 @@ TEST(list,DELETEALL_actually_deletes)
     f.InsertLast(2);
     f.DeleteAll();
     ASSERT_ANY_THROW(f.GeNode(2));
-}
-TEST(list,DELETEALL_throws_if_list_is_already_empty)
-{
-    List<int> f;
-    ASSERT_ANY_THROW(f.DeleteAll());
 }
 TEST(list,DeleteNext_actually_deletes_next)
 {

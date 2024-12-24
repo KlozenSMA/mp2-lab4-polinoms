@@ -4,7 +4,7 @@ template<class T>
 struct NODE
 {
     T val;
-    NODE* next;
+    NODE<T>* next;
     NODE(T _val, NODE* _next)
     {
         _val = val;
@@ -15,7 +15,6 @@ struct NODE
 template<class T>
 class List
 {
-    protected:
     NODE<T>* first; NODE<T>* last;
     public:
     List()
@@ -61,59 +60,94 @@ class List
     void InsertFirst(T Val)
     {
         NODE<T>* p = new NODE(Val,first);
-        first = p;
-        if (last == nullptr)
+        if (first == nullptr && last == nullptr)
         {
+            first = p;
             last = p;
+        }
+        else 
+        {
+            if (first -> next == nullptr)
+            {
+                first -> next = first;
+                last = first->next;
+                first = p;
+            }
+            else
+            {
+                NODE<T>* tmp = first;
+                tmp->next = first -> next;
+                p->next = tmp;
+                first = nullptr;
+                first = p;
+            }
         }
     }
     void InsertLast(T Val)
     {
         NODE<T>* p = new NODE<T>(Val,nullptr);
         NODE<T>* tmp = first;
-        while(tmp->next!=nullptr)
+        if (tmp == nullptr)
         {
-            tmp = tmp->next;
-            tmp->next = p;
+            first = p;
+            first->next = nullptr;
+            last = p;
+            last->next = nullptr;
+        }
+        else
+        {
+            while(tmp->next!=nullptr)
+            {
+                tmp = tmp->next;
+                tmp->next = p;
+            }
         }
     }
     void DeleteAll()
     {
-        if (first != nullptr)
+        if (first -> next != nullptr)
         {
             NODE<T>* tmp = first;
             while (first->next != nullptr)
             {
                 first = tmp->next;
-                delete tmp;
+                tmp = nullptr;
                 tmp = first;
             }
-            delete first;
+            first = nullptr;
         }
-        else{throw "list is already empty";}
+        else{first = nullptr;}
     }
     List(const List& b)
     {
-        if (b.first-> next != nullptr)
+        if (b.first == nullptr)
         {
-            first = b.first;
-            first->next = b.first->next;
-            NODE<T>* tmp = b.first->next;
-            NODE<T>* tmp1 = first->next;
-            while (tmp -> next != nullptr)
-            {
-                NODE<T>* nns = tmp;
-                NODE<T>* nns1 = tmp1;
-                nns1 = nns;
-                nns1 -> next = nns -> next;
-                tmp = tmp -> next;
-            }
-            last->val = b.last->val;
+            first = nullptr;
+            last = first;
         }
         else
         {
-            first = b.first;
-            last = b.first;
+            if (b.first-> next != nullptr)
+            {
+                first = b.first;
+                first->next = b.first->next;
+                NODE<T>* tmp = b.first->next;
+                NODE<T>* tmp1 = first->next;
+                while (tmp -> next != nullptr)
+                {
+                    NODE<T>* nns = tmp;
+                    NODE<T>* nns1 = tmp1;
+                    nns1 = nns;
+                    nns1 -> next = nns -> next;
+                    tmp = tmp -> next;
+                }
+                last->val = b.last->val;
+            }
+            else
+            {
+                first = b.first;
+                last = b.first;
+            }
         }
 
     }
