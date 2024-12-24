@@ -5,7 +5,11 @@ struct NODE
 {
     T val;
     NODE* next;
-    NODE(T val; NODE* next);
+    NODE(T _val, NODE* _next)
+    {
+        _val = val;
+        _next = next;
+    }
 };
 
 template<class T>
@@ -27,17 +31,32 @@ class List
         else
         {first = p;last = p;}
     }
-    void Insert(NODE* now, NODE* insertion)
+    void Insert(NODE<T>* now, NODE<T>* insertion)
     {
-        if (now -> next != nullptr)
+        if (insertion == nullptr)
         {
-            insertion-> next = now -> next;
-            insertion-> val = now -> val;
+            throw "Node you're tryinng to insert does not exist";
         }
-        else
+        //finding previous element
+        NODE<T>* Runner = first;
+        bool sflag = false;
+        NODE<T>* previous;
+        while (Runner != nullptr)
         {
-            last->val = insertion -> val;
+            if (Runner -> next == now)
+            {
+                previous = Runner;
+                Runner = nullptr;
+                sflag = true;
+            }
         }
+        if (not(sflag))
+        {
+            throw "your node-destination not exist in this universe";
+        }
+        NODE<T>* innit = now;
+        previous->next = insertion;
+        insertion->next = innit;
     }
     void InsertFirst(T Val)
     {
@@ -50,9 +69,8 @@ class List
     }
     void InsertLast(T Val)
     {
-        NODE<T>* p = new NODE(Val,nullptr);
-        NODE<T>* tmp;
-        tmp = first;
+        NODE<T>* p = new NODE<T>(Val,nullptr);
+        NODE<T>* tmp = first;
         while(tmp->next!=nullptr)
         {
             tmp = tmp->next;
@@ -72,23 +90,25 @@ class List
             }
             delete first;
         }
+        else{throw "list is already empty";}
     }
     List(const List& b)
     {
-        DeleteAll();
-        if (b.first->next != nullptr)
+        if (b.first-> next != nullptr)
         {
             first = b.first;
             first->next = b.first->next;
-            NODE* tmp = b.first->next;
-            NODE* tmp1 = first->next;
+            NODE<T>* tmp = b.first->next;
+            NODE<T>* tmp1 = first->next;
             while (tmp -> next != nullptr)
             {
-                tmp1 -> next = tmp -> next;
+                NODE<T>* nns = tmp;
+                NODE<T>* nns1 = tmp1;
+                nns1 = nns;
+                nns1 -> next = nns -> next;
                 tmp = tmp -> next;
-                tmp1 = tmp1 -> next;
             }
-            last->val = tmp->val;
+            last->val = b.last->val;
         }
         else
         {
@@ -101,39 +121,55 @@ class List
     {
         DeleteAll();
     }
-    NODE* RetFirst()
-    {
-        return &first;
-    }
     void Print()
     {
-        NODE* P = first;
+        NODE<T>* p = first;
         while (p -> next != nullptr)
         {
-            cout << p -> val << " ";
+            std::cout << p -> val << " ";
             p = p -> next;
         }
-        cout << p -> val;
+        std::cout << p -> val;
     }
-    void DeleteTheNext(NODE* that)
+    // returns first node with that value
+    NODE<T>* GeNode(T vali)
     {
-        NODE* temp = that -> next;
-        that - > next = that -> next -> next;
+        NODE<T>* p = first;
+        while (p -> next != nullptr)
+        {
+            if (p->val == vali)
+            {
+                return p;
+            }
+            p = p->next;
+        }
+        throw "This Element does not exist";
+    }
+    void DeleteTheNext(NODE<T>* that)
+    {
+        if (that -> next != nullptr || that != nullptr)
+        {
+            throw "There is nothing next or you're givin' wrong pointer";
+        }
+        if (that -> next -> next != nullptr)
+        {
+            NODE<T>* tmp = that->next;
+            that -> next = nullptr;
+            delete tmp;
+        }
+        NODE<T>* temp = that -> next;
+        that -> next = that -> next -> next;
         delete temp;
     }
-    List operator=(const List& l)
+    List<T> operator=(const List<T>& l)
     {
-        if (&l == *this)
-        {
-            return this;
-        }
         this->DeleteAll();
-        if (b.first->next != nullptr)
+        if (l.first->next != nullptr)
         {
-            first = b.first;
-            first->next = b.first->next;
-            NODE* tmp = b.first->next;
-            NODE* tmp1 = first->next;
+            first = l.first;
+            first->next = l.first->next;
+            NODE<T>* tmp = l.first->next;
+            NODE<T>* tmp1 = first->next;
             while (tmp -> next != nullptr)
             {
                 tmp1 -> next = tmp -> next;
@@ -144,8 +180,47 @@ class List
         }
         else
         {
-            first = b.first;
-            last = b.first;
+            first = l.first;
+            last = l.first;
         }
+        return *this;
+    }
+    bool operator==(const List<T>& l) const
+    {
+        NODE<T>* runner = first;
+        NODE<T>* runner1 = l.first;
+        while (runner -> next != nullptr && runner1 -> next != nullptr)
+        {
+            if ((runner->next->val != runner1->next->val) || (runner == nullptr || runner1 == nullptr))
+            {
+                return false;
+            }
+            runner = runner->next;
+            runner1 = runner1->next;
+        }
+        if (last->val == l.last->val)
+        {
+            return true;
+        }
+        return false;
+    }
+    bool operator!=(const List<T>& l) const
+    {
+        NODE<T>* runner = first;
+        NODE<T>* runner1 = l.first;
+        while (runner -> next != nullptr && runner1 -> next != nullptr)
+        {
+            if ((runner->next->val != runner1->next->val) || (runner == nullptr || runner1 == nullptr))
+            {
+                return true;
+            }
+            runner = runner->next;
+            runner1 = runner1->next;
+        }
+        if (last->val == l.last->val)
+        {
+            return false;
+        }
+        return true;
     }
 };

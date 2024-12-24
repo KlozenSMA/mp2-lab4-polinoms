@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/User/Documents/mp2-lab4-polinoms",
-      "program": "c:/Users/User/Documents/mp2-lab4-polinoms/build/Debug/outDebug",
+      "cwd": "c:/Users/User/Documents/test1",
+      "program": "c:/Users/User/Documents/test1/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
